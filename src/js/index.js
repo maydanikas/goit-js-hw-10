@@ -21,8 +21,6 @@ const renderContryList = country => {
 };
 
 const renderCountryInfo = country => {
-  //   console.log(country);
-
   return country
     .map(el => {
       const languagesList = Object.values(el.languages);
