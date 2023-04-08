@@ -38,26 +38,35 @@ const renderCountryInfo = country => {
 const onSearchInput = () => {
   const query = inputEl.value;
 
+  countryCardEl.innerHTML = '';
+  coutriesListEl.innerHTML = '';
+
+  if (!query) {
+    return;
+  }
+
   fetchCountries(query)
     .then(countries => {
-      countryCardEl.innerHTML = '';
-      coutriesListEl.innerHTML = '';
-
-      if (!countries) {
-        return;
-      }
       if (countries.length > 10) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
-        coutriesListEl.innerHTML = '';
       }
       if (countries.length > 1 && countries.length < 10) {
-        coutriesListEl.innerHTML = renderContryList(countries);
+        coutriesListEl.insertAdjacentHTML(
+          'beforeend',
+          renderContryList(countries)
+        );
       }
       if (countries.length === 1) {
-        coutriesListEl.innerHTML = renderContryList(countries);
-        countryCardEl.innerHTML = renderCountryInfo(countries);
+        coutriesListEl.insertAdjacentHTML(
+          'beforeend',
+          renderContryList(countries)
+        );
+        countryCardEl.insertAdjacentHTML(
+          'beforeend',
+          renderCountryInfo(countries)
+        );
       }
     })
     .catch(error => {
